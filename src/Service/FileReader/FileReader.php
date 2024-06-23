@@ -10,11 +10,6 @@ use App\Service\FileReader\Interface\StorageDriverInterface;
 final class FileReader implements FileReaderInterface
 {
     /**
-     * @const string
-     */
-    private const string DEFAULT_DRIVER = StorageDriverInterface::STORAGE_TYPE_LOCAL;
-
-    /**
      * @param \App\Service\FileReader\Interface\StorageDriverInterface[] $drivers
      */
     public function __construct(private readonly iterable $drivers)
@@ -24,14 +19,19 @@ final class FileReader implements FileReaderInterface
     /**
      * @throws \App\Service\FileReader\Exception\FileReaderException
      */
-    public function read(string $file, ?string $storage = null): iterable
+    public function read(string $file, string $storage, int $linesPerStream): iterable
     {
         $lines = [];
-        $driver = $this->getDriver($storage ?? self::DEFAULT_DRIVER);
+        $counter = 0;
+
+        $driver = $this->getDriver($storage);
         $stream = $driver->startStream($file);
 
-        if (($line = fgets($stream, 4096)) !== false) {
-            $lines[] = $line;
+        while ($counter < $linesPerStream) {
+            if (($line = fgets($stream, 4096)) !== false) {
+                $lines[] = $line;
+            }
+            $counter++;
         }
 
         $driver->endStream();

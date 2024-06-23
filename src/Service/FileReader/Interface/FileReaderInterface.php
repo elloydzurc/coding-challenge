@@ -4,5 +4,5 @@ namespace App\Service\FileReader\Interface;
 
 interface FileReaderInterface
 {
-    public function read(string $file, ?string $storage = null): iterable;
+    public function read(string $file, string $storage, int $linesPerStream): iterable;
 }

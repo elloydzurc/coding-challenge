@@ -5,7 +5,9 @@ namespace App\Service\Log\Interface;
 
 interface LogServiceInterface
 {
+    public const int LINES_PER_STREAM = 20;
+
     public function filter(array $criteria): int;
 
-    public function populateLogsFromFileStream(string $file, ?string $storage = null): int;
+    public function populateLogsFromFileStream(array $settings): void;
 }

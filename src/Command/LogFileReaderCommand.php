@@ -21,16 +21,14 @@ final class LogFileReaderCommand extends Command
     protected function configure(): void
     {
         $this->addArgument('file', InputArgument::REQUIRED, 'File to read')
-            ->addArgument('storage', InputArgument::OPTIONAL, 'Local Storage or S3. Default: Local');
+            ->addArgument('storage', InputArgument::OPTIONAL, 'Local Storage or S3. Default: Local')
+            ->addArgument('lines', InputArgument::OPTIONAL, 'Number of lines to read on file');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $storage = $input->getArgument('storage');
-        $file = $input->getArgument('file');
-
         try {
-            $this->logService->populateLogsFromFileStream($file, $storage);
+            $this->logService->populateLogsFromFileStream($input->getArguments());
         } catch (\Throwable $exception) {
             $output->writeln(\sprintf('<error>%s</error>', $exception->getMessage()));
         }

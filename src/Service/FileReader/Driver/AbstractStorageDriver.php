@@ -59,7 +59,13 @@ abstract class AbstractStorageDriver implements StorageDriverInterface
         }
 
         $settings = $this->filesystemOperator->read(self::SETTINGS_FILE);
-        $this->settings = \json_decode($settings, true, 512, \JSON_THROW_ON_ERROR);
+
+        $this->settings = \json_decode(
+            empty($settings) ? '{}' : $settings,
+            true,
+            512,
+            \JSON_THROW_ON_ERROR
+        );
     }
 
     /**
