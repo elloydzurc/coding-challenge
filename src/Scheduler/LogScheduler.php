@@ -11,12 +11,16 @@ use Symfony\Component\Scheduler\Attribute\AsCronTask;
 #[AsCronTask('* * * * *')]
 final class LogScheduler
 {
+    public function __construct(private readonly KernelInterface $kernel)
+    {
+    }
+
     /**
      * @throws \Exception
      */
-    public function __invoke(KernelInterface $kernel): void
+    public function __invoke(): void
     {
-        $application = new Application($kernel);
+        $application = new Application($this->kernel);
         $application->setAutoExit(false);
 
         $input = new ArrayInput([
