@@ -6,9 +6,11 @@ namespace App\Entity;
 use App\Repository\LogRepository;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 
 #[ORM\Entity(repositoryClass: LogRepository::class)]
 #[ORM\Table(name: "logs")]
+#[HasLifecycleCallbacks]
 class Log extends AbstractEntity
 {
     #[ORM\Column(name: "method", type: "string", length: 50)]

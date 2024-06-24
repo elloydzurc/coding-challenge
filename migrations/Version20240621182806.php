@@ -23,8 +23,8 @@ final class Version20240621182806 extends AbstractMigration
             method VARCHAR(50) NOT NULL,
             protocol VARCHAR(50) NOT NULL,
             request_date DATETIME NOT NULL,
-            created_at DATETIME NOT NULL,
-            updated_at DATETIME NOT NULL,
+            created_at DATETIME,
+            updated_at DATETIME,
             PRIMARY KEY(id)
         ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
 

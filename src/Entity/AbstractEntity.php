@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Doctrine\UuidGenerator;
+use Carbon\Carbon;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -13,7 +14,7 @@ abstract class AbstractEntity
     protected ?DateTimeInterface $createdAt = null;
 
     #[ORM\Id]
-    #[ORM\Column(type: "uuid", unique: true)]
+    #[ORM\Column(type: "guid", unique: true)]
     #[ORM\GeneratedValue(strategy: "CUSTOM")]
     #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
     protected ?string $id = null;
@@ -36,9 +37,11 @@ abstract class AbstractEntity
         return $this->updatedAt;
     }
 
-    public function setCreatedAt(DateTimeInterface $createdAt): AbstractEntity
+
+    #[ORM\PrePersist]
+    public function setCreatedAt(): AbstractEntity
     {
-        $this->createdAt = $createdAt;
+        $this->createdAt = Carbon::now('UTC');
 
         return $this;
     }
@@ -50,9 +53,10 @@ abstract class AbstractEntity
         return $this;
     }
 
-    public function setUpdatedAt(DateTimeInterface $updatedAt): AbstractEntity
+    #[ORM\PreUpdate]
+    public function setUpdatedAt(): AbstractEntity
     {
-        $this->updatedAt = $updatedAt;
+        $this->updatedAt = Carbon::now('UTC');
 
         return $this;
     }
