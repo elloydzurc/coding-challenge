@@ -19,8 +19,22 @@ final class LogController extends AbstractController
     #[Route('/count', name: 'count', methods: ['GET'])]
     public function count(Request $request): Response
     {
-        return new JsonResponse([
-            'count' => $this->analytics->filter($request->query->all()),
-        ]);
+        try {
+            $response = [
+                'code' => Response::HTTP_OK,
+                'output' => [
+                    'count' => $this->analytics->filter($request->query->all()),
+                ],
+            ];
+        } catch (\Exception $exception) {
+            $response = [
+                'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'output' => [
+                    'error' => $exception->getMessage(),
+                ],
+            ];
+        }
+
+        return new JsonResponse($response['output'], $response['code']);
     }
 }

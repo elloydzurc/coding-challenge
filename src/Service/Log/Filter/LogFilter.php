@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Service\Log\Filter;
 
+use App\Service\Log\Exception\LogServiceRuntimeException;
 use Carbon\Carbon;
 use DateTimeInterface;
 
@@ -14,7 +15,7 @@ class LogFilter
 
     private ?string $startDate = null;
 
-    private ?string $statusCode = null;
+    private mixed $statusCode = null;
 
     public function __construct(private readonly ?array $criteria = null)
     {
@@ -40,11 +41,15 @@ class LogFilter
             return null;
         }
 
-        return Carbon::parse($this->endDate, 'UTC');
+        return $this->parseDateTime($this->endDate);
     }
 
     public function getServiceName(): ?array
     {
+        if ($this->serviceName === null) {
+            return null;
+        }
+
         return \is_array($this->serviceName) ? $this->serviceName : \explode(',', $this->serviceName);
     }
 
@@ -54,11 +59,24 @@ class LogFilter
             return null;
         }
 
-        return Carbon::parse($this->startDate, 'UTC');
+        return $this->parseDateTime($this->startDate);
     }
 
-    public function getStatusCode(): ?string
+    public function getStatusCode(): ?int
     {
-        return $this->statusCode;
+        if (\is_numeric($this->statusCode) === false) {
+            throw LogServiceRuntimeException::invalidStatusCodeFormat();
+        }
+
+        return (int)$this->statusCode;
+    }
+
+    private function parseDateTime(string $dateTime): DateTimeInterface
+    {
+        try {
+            return Carbon::parse($dateTime, 'UTC');
+        } catch (\Throwable) {
+            throw LogServiceRuntimeException::invalidDatetimeFormat();
+        }
     }
 }
