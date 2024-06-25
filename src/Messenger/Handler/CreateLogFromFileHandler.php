@@ -18,10 +18,18 @@ class CreateLogFromFileHandler
 
     public function __invoke(CreateLogFromFileMessage $message): void
     {
-        $this->logRepository->createFromEntity($this->createEntityFromContent($message->getContent()));
+        $hash = \md5($message->getContent());
+
+        if ($this->logRepository->findByHash($hash)) {
+            return;
+        }
+
+        $this->logRepository->createFromEntity(
+            $this->createEntityFromContent($message->getContent(), $hash)
+        );
     }
 
-    private function createEntityFromContent(string $content): Log
+    private function createEntityFromContent(string $content, string $hash): Log
     {
         $pattern = '/([A-Z-]+) - - \[(.*?)] "([A-Z]+) ([^ ]+) (HTTP\/[0-9.]+)" ([0-9]+)/';
         preg_match($pattern, $content, $matches);
@@ -30,6 +38,7 @@ class CreateLogFromFileHandler
 
         $log = new Log();
         $log->setServiceName($serviceName)
+            ->setHash($hash)
             ->setMethod($method)
             ->setRequestDate(Carbon::parse($requestDate, 'UTC'))
             ->setServiceUrl($serviceUrl)

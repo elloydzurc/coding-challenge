@@ -13,6 +13,9 @@ use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 #[HasLifecycleCallbacks]
 class Log extends AbstractEntity
 {
+    #[ORM\Column(name: "hash", type: "string", length: 255)]
+    private string $hash;
+
     #[ORM\Column(name: "method", type: "string", length: 50)]
     private string $method;
 
@@ -33,6 +36,11 @@ class Log extends AbstractEntity
      */
     #[ORM\Column(name: "status_code", type: "integer")]
     private int $statusCode;
+
+    public function getHash(): string
+    {
+        return $this->hash;
+    }
 
     public function getMethod(): string
     {
@@ -62,6 +70,13 @@ class Log extends AbstractEntity
     public function getStatusCode(): int
     {
         return $this->statusCode;
+    }
+
+    public function setHash(string $hash): Log
+    {
+        $this->hash = $hash;
+
+        return $this;
     }
 
     public function setMethod(string $method): Log

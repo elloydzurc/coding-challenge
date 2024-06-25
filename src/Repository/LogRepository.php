@@ -40,6 +40,19 @@ final class LogRepository extends AbstractRepository implements LogRepositoryInt
         return $count === null ? 0 : (int)$count;
     }
 
+    public function findByHash(string $hash): ?Log
+    {
+        $builder = $this->createQueryBuilder('l');
+
+        $results = $builder->select()
+            ->where($builder->expr()->eq('l.hash', ':hash'))
+            ->setParameter('hash', $hash)
+            ->getQuery()
+            ->getResult();
+
+       return $results[0] ?? null;
+    }
+
     protected function getEntityClass(): string
     {
         return Log::class;
