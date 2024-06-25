@@ -16,7 +16,7 @@ final class LogRepository extends AbstractRepository implements LogRepositoryInt
         $builder->select('COUNT(l.id)');
 
         if ($filter->getServiceName()) {
-            $builder->andWhere($builder->expr()->eq('l.serviceName', ':serviceName'))
+            $builder->andWhere($builder->expr()->in('l.serviceName', ':serviceName'))
                 ->setParameter('serviceName', $filter->getServiceName());
         }
 

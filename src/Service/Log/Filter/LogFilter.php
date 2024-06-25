@@ -10,7 +10,7 @@ class LogFilter
 {
     private ?string $endDate = null;
 
-    private ?string $serviceName = null;
+    private mixed $serviceName = null;
 
     private ?string $startDate = null;
 
@@ -43,9 +43,9 @@ class LogFilter
         return Carbon::parse($this->endDate, 'UTC');
     }
 
-    public function getServiceName(): ?string
+    public function getServiceName(): ?array
     {
-        return $this->serviceName;
+        return \is_array($this->serviceName) ? $this->serviceName : \explode(',', $this->serviceName);
     }
 
     public function getStartDate(): ?DateTimeInterface
