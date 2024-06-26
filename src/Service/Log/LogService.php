@@ -31,7 +31,7 @@ final class LogService implements LogServiceInterface
      */
     public function populateLogsFromFileStream(array $settings): void
     {
-        if (\is_numeric($settings['lines']) === false) {
+        if ($settings['lines'] !== null && \is_numeric($settings['lines']) === false) {
             throw new InvalidArgumentException('Arguments "lines" must be numeric.');
         }
 
