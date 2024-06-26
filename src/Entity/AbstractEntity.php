@@ -27,7 +27,7 @@ abstract class AbstractEntity
         return $this->createdAt;
     }
 
-    public function getId(): ?stsring
+    public function getId(): ?string
     {
         return $this->id;
     }
