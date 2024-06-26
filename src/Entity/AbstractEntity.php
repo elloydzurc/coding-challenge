@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 abstract class AbstractEntity
 {
-    #[ORM\Column(name: "created_at", type: "datetime")]
+    #[ORM\Column(name: "created_at", type: "datetime", nullable: true)]
     protected ?DateTimeInterface $createdAt = null;
 
     #[ORM\Id]
@@ -19,7 +19,7 @@ abstract class AbstractEntity
     #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
     protected ?string $id = null;
 
-    #[ORM\Column(name: "updated_at", type: "datetime")]
+    #[ORM\Column(name: "updated_at", type: "datetime", nullable: true)]
     protected ?DateTimeInterface $updatedAt = null;
 
     public function getCreatedAt(): ?DateTimeInterface
@@ -27,7 +27,7 @@ abstract class AbstractEntity
         return $this->createdAt;
     }
 
-    public function getId(): ?string
+    public function getId(): ?stsring
     {
         return $this->id;
     }

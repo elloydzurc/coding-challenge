@@ -10,6 +10,7 @@ doctrine:
                 host: '%env(DB_HOST)%'
                 port: '%env(DB_PORT)%'
                 server_version: '%env(DB_DATABASE_SERVER_VERSION)%'
+                use_savepoints: true
     orm:
         auto_generate_proxy_classes: true
         enable_lazy_ghost_objects: true

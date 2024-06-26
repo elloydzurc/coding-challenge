@@ -64,7 +64,7 @@ class LogFilter
 
     public function getStatusCode(): ?int
     {
-        if (\is_numeric($this->statusCode) === false) {
+        if ($this->statusCode !== null && \is_numeric($this->statusCode) === false) {
             throw LogServiceRuntimeException::invalidStatusCodeFormat();
         }
 

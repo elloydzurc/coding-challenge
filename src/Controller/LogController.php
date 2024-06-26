@@ -28,7 +28,7 @@ final class LogController extends AbstractController
             ];
         } catch (\Exception $exception) {
             $response = [
-                'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'code' => Response::HTTP_BAD_REQUEST,
                 'output' => [
                     'error' => $exception->getMessage(),
                 ],
