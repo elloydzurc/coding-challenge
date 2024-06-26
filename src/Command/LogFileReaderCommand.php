@@ -30,7 +30,11 @@ final class LogFileReaderCommand extends Command
         try {
             $this->logService->populateLogsFromFileStream($input->getArguments());
         } catch (\Throwable $exception) {
-            $output->writeln(\sprintf('<error>%s</error>', $exception->getMessage()));
+            $output->writeln(
+                \sprintf('<error>%s</error>', $exception->getMessage())
+            );
+
+            return Command::FAILURE;
         }
 
         return Command::SUCCESS;
