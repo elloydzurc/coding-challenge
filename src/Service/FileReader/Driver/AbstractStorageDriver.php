@@ -7,11 +7,11 @@ use League\Flysystem\FilesystemOperator;
 
 abstract class AbstractStorageDriver implements StorageDriverInterface
 {
-    private const string SETTINGS_FILE = 'settings.json';
+    public const string SETTINGS_FILE = 'settings.json';
+
+    public mixed $resource;
 
     protected FilesystemOperator $filesystemOperator;
-
-    protected mixed $resource;
 
     private string $file;
 
