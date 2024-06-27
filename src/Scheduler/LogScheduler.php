@@ -26,7 +26,7 @@ final class LogScheduler
         $input = new ArrayInput([
             'command' => 'log:read',
             'file' => 'logs.log',
-            'lines' => 10,
+            'lines' => 5,
         ]);
 
         return $application->run($input);
