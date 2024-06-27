@@ -18,7 +18,7 @@ final class LogScheduler
     /**
      * @throws \Exception
      */
-    public function __invoke(): void
+    public function __invoke(): int
     {
         $application = new Application($this->kernel);
         $application->setAutoExit(false);
@@ -29,6 +29,6 @@ final class LogScheduler
             'lines' => 10,
         ]);
 
-        $application->run($input);
+        return $application->run($input);
     }
 }
