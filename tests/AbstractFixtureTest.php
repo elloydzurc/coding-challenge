@@ -27,7 +27,6 @@ abstract class AbstractFixtureTest extends WebTestCase
 
     protected function setUp(): void
     {
-        $this->client = self::createClient();
         $kernel = self::bootKernel();
 
         $this->entityManager = $kernel->getContainer()

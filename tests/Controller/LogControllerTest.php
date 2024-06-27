@@ -11,6 +11,8 @@ final class LogControllerTest extends AbstractApiTest
 {
     public function setUp(): void
     {
+        $this->client = self::createClient();
+
         parent::setUp();
 
         $this->loadFixtures(LogFixtures::class);

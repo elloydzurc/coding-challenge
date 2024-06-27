@@ -10,4 +10,6 @@ interface LogRepositoryInterface extends AbstractRepositoryInterface
     public function countByCriteria(LogFilter $filter): int;
 
     public function findByHash(string $hash): ?Log;
+
+    public function getEntityClass(): string;
 }

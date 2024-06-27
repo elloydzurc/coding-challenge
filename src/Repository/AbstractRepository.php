@@ -23,5 +23,5 @@ abstract class AbstractRepository extends ServiceEntityRepository implements Abs
         $entityManager->flush();
     }
 
-    abstract protected function getEntityClass(): string;
+    abstract public function getEntityClass(): string;
 }

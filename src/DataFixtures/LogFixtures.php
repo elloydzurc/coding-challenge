@@ -13,14 +13,13 @@ class LogFixtures extends Fixture
 {
     public const string INVOICE_SERVICE = 'INVOICE-SERVICE';
 
-    public const string LOG_REFERENCE = 'log';
-
     public const string USER_SERVICE = 'USER-SERVICE';
 
     public function load(ObjectManager $manager): void
     {
         $log1 = $this->createLog(
             Carbon::parse('2024-01-01 00:00:00'),
+            'log1',
             self::USER_SERVICE,
             Response::HTTP_CREATED
         );
@@ -28,6 +27,7 @@ class LogFixtures extends Fixture
 
         $log2 = $this->createLog(
             Carbon::parse('2024-01-01 11:22:33'),
+            'log2',
             self::USER_SERVICE,
             Response::HTTP_BAD_REQUEST
         );
@@ -35,6 +35,7 @@ class LogFixtures extends Fixture
 
         $log3 = $this->createLog(
             Carbon::parse('2024-01-03 07:11:42'),
+            'log3',
             self::INVOICE_SERVICE,
             Response::HTTP_BAD_REQUEST
         );
@@ -42,6 +43,7 @@ class LogFixtures extends Fixture
 
         $log4 = $this->createLog(
             Carbon::parse('2024-01-04 10:11:12'),
+            'log4',
             self::INVOICE_SERVICE,
             Response::HTTP_CREATED
         );
@@ -49,6 +51,7 @@ class LogFixtures extends Fixture
 
         $log5 = $this->createLog(
             Carbon::parse('2024-01-02 03:22:13'),
+            'log5',
             self::USER_SERVICE,
             Response::HTTP_BAD_REQUEST
         );
@@ -57,11 +60,15 @@ class LogFixtures extends Fixture
         $manager->flush();
     }
 
-    private function createLog(DateTimeInterface $requestDate, string $serviceName, int $statusCode): Log
-    {
+    private function createLog(
+        DateTimeInterface $requestDate,
+        string $hashKey,
+        string $serviceName,
+        int $statusCode
+    ): Log {
         return (new Log())
             ->setServiceName($serviceName)
-            ->setHash(\md5('log1'))
+            ->setHash(\md5($hashKey))
             ->setProtocol('HTTP 1.1')
             ->setMethod('POST')
             ->setServiceUrl('/user')

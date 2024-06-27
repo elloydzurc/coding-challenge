@@ -53,7 +53,7 @@ final class LogRepository extends AbstractRepository implements LogRepositoryInt
        return $results[0] ?? null;
     }
 
-    protected function getEntityClass(): string
+    public function getEntityClass(): string
     {
         return Log::class;
     }
