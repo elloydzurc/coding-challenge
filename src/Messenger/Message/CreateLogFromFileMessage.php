@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace App\Messenger\Message;
 
-final class CreateLogFromFileMessage
+class CreateLogFromFileMessage
 {
-    public function __construct(private string $content)
+    public function __construct(private readonly string $content)
     {
     }
 

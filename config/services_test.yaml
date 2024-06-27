@@ -1,3 +1,7 @@
 services:
-    App\Service\Log\Interface\LogServiceInterface:
+    log.service:
+        class: App\Service\Log\Interface\LogServiceInterface
+    
+    log.service.public:
+        alias: log.service
         public: true

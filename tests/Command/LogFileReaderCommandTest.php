@@ -49,7 +49,7 @@ final class LogFileReaderCommandTest extends KernelTestCase
             ->with($arguments);
 
         $kernel = self::bootKernel();
-        $kernel->getContainer()->set(LogServiceInterface::class, $logService);
+        $kernel->getContainer()->set('log.service.public', $logService);
 
         $command = new LogFileReaderCommand($logService);
         $tester = new CommandTester($command);
@@ -74,7 +74,7 @@ final class LogFileReaderCommandTest extends KernelTestCase
             ->willThrowException(new $exception($exceptionMessage));
 
         $kernel = self::bootKernel();
-        $kernel->getContainer()->set(LogServiceInterface::class, $logService);
+        $kernel->getContainer()->set('log.service.public', $logService);
 
         $command = new LogFileReaderCommand($logService);
         $tester = new CommandTester($command);
